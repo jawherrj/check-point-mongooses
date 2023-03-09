@@ -124,5 +124,8 @@ const many_apes =async ()=>{
           console.log('results:', res)
       }
   }
- ).sort({name:1}).limit(2).select("-age").exec()
+ ).sort({name:1}).limit(2).select("-age").exec().then(res=>{
+  console.log(res)
+ })
  }
+ many_apes()

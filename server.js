@@ -15,7 +15,7 @@ const run = async () => {
     favorateFood: ["bananaggggg", "lazaniya"],
   });
 };
- //run()
+//run()
 const apeslearnmongoose = async () => {
   await PersonModel.collection.insertMany([
     {
@@ -24,108 +24,70 @@ const apeslearnmongoose = async () => {
       favorateFood: ["banana", "zera3a"],
     },
     {
-        name: "me",
-        age: 32,
-        favorateFood: ["makla", "kol"],
-      },
-      {
-        name: "saadan",
-        age: 35,
-        favorateFood: ["banana"],
-      },
-
+      name: "me",
+      age: 32,
+      favorateFood: ["makla", "kol"],
+    },
+    {
+      name: "saadan",
+      age: 35,
+      favorateFood: ["banana"],
+    },
   ]);
 };
-// apeslearnmongoose()
+//  apeslearnmongoose()
 
-const find_ape =async ()=>{
- await PersonModel.collection.find()
-
-}
+const find_ape = async () => {
+  const find = await PersonModel.find();
+  console.log(find);
+};
 //find_ape()
 
-const find_oneape =async ()=>{
-    await PersonModel.collection.findOne({name:'chimpanzie'},function (err,res)
-    {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('results:', res)
-        }
-    }
-   )
-   }
-  // find_oneape()
-const find_oneapeID =async ()=>{
-    
-    await PersonModel.collection.findById("640390ca956030665382eb7f",function (err,res)
-    {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('results:', res)
-        }
-    }
-   )
-   }
-//  find_oneapeID()
+const find_oneape = async () => {
+  const findone = await PersonModel.findOne({ name: "chimpanzie" });
+  console.log(findone);
+};
+//find_oneape()
+const find_oneapeID = async () => {
+  const findbyid = await PersonModel.findById("6411c2c543cad4b15f05dc4c");
+  console.log(findbyid);
+};
+//find_oneapeID()
 
-PersonModel.collection.findOne({ name: "chimpanzie" }).then((user) => {
+PersonModel.findOne({ name: "saadan" }).then((user) => {
     user.favorateFood.push("Hamburger");
     user.markModified("favorateFood");
-    user.save((err) => console.log(err));
+    user.save();
   });
 
-
- 
-
-
- PersonModel.collection.findOneAndUpdate(
+const findAndUpdate = async () => {
+  const findandupdate = await PersonModel.findOneAndUpdate(
     { name: "chimpanzie" },
-    { name: "Tarnished" },
-    null,
-    function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Original Doc : ", docs);
-      }
-    }
+    { name: "Tarnished" }
   );
+};
+//findAndUpdate()
 
+const findAndremove = async () => {
+  const remove = await PersonModel.findByIdAndRemove(
+    "6411c2c543cad4b15f05dc4b"
+  );
+};
 
+//findAndremove()
 
- PersonModel.collection.findByIdAndRemove("640390ca956030665382eb7f", function (err, ape) {
-    if (err){
-        console.log(err)
-    }
-    else{
-        console.log("Removed User : ", ape);
-    }
-});
+const removemany = async () => {
+  const removemany = await PersonModel.remove({ name: "me" });
+};
+//removemany()
 
-PersonModel.collection.remove({name:"me"}, function (err, ape) {
-  if (err){
-      console.log(err)
-  }
-  else{
-      console.log("Removed User : ", ape);
-  }
-});
-const many_apes =async ()=>{
-    
-  await PersonModel.collection.find({
-    favorateFood:"burritos"
-  },function (err,res)
-  {
-      if (err) {
-          console.log(err)
-      } else {
-          console.log('results:', res)
-      }
-  }
- ).sort({name:1}).limit(2).select("-age").exec().then(res=>{
-  console.log(res)
- })
- }
- many_apes()
+PersonModel.find({
+  favorateFood: "Hamburger",
+})
+  .sort({ name: 1 })
+  .limit(2)
+  .select("-age")
+  .exec()
+  .then((res) => {
+    console.log(res);
+  });
